@@ -11,14 +11,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private var mAuth: FirebaseAuth? = null
-    private val TAG: String = "Main Activity"
+    private val tag: String = "Main Activity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         mAuth = FirebaseAuth.getInstance()
         if (mAuth!!.currentUser != null){
-            Log.d(TAG,"Continue with :" + mAuth!!.currentUser!!.email)
+            Log.d(tag,"Continue with :" + mAuth!!.currentUser!!.email)
             goToBookList()
         }
 
@@ -36,23 +36,23 @@ class MainActivity : AppCompatActivity() {
 
         if (userName.isEmpty()){
             Toast.makeText(this, "Please enter your email address !", Toast.LENGTH_LONG).show()
-            Log.d(TAG,"Email was empty")
+            Log.d(tag,"Email was empty")
             return
         }
         if (password.isEmpty()){
             Toast.makeText(this, "Please enter your password !", Toast.LENGTH_LONG).show()
-            Log.d(TAG,"Password was empty")
+            Log.d(tag,"Password was empty")
             return
         }
 
         mAuth!!.signInWithEmailAndPassword(userName,password).addOnCompleteListener{task ->
             if(!task.isSuccessful){
                 Toast.makeText(this, "Authentication Failed :" + task.exception, Toast.LENGTH_LONG).show()
-                Log.d(TAG, "Authentication Failed :" + task.exception)
+                Log.d(tag, "Authentication Failed :" + task.exception)
             }
             else{
                 Toast.makeText(this, "Authentication Successful :", Toast.LENGTH_LONG).show()
-                Log.d(TAG, "Sign in successful")
+                Log.d(tag, "Sign in successful")
                 goToBookList()
 
             }
