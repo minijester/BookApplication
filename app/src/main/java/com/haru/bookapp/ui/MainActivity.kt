@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
     private fun goToRegister(){
         val intent = Intent(this, Register::class.java)
         startActivity(intent)
-        finish()
+
     }
 
 }

@@ -8,13 +8,16 @@ import android.widget.Toast
 import com.haru.bookapp.R
 import com.haru.bookapp.model.Book
 import com.haru.bookapp.ui.adapter.BookAdapter
+import com.haru.bookapp.ui.adapter.BookView
 import kotlinx.android.synthetic.main.activity_book.*
 
 
-class BookActivity : AppCompatActivity() {
+class BookActivity : AppCompatActivity(), BookView {
 
     private lateinit var adapter: BookAdapter
-    var sampleBookData = arrayListOf<Book>()
+    private var sampleBookData = arrayListOf<Book>()
+    val presenter:BookPresenter = BookPresenter(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book)
@@ -23,23 +26,28 @@ class BookActivity : AppCompatActivity() {
         adapter = BookAdapter()
         adapter.setBookList(sampleBookData)
         adapter.setListener(object : BookAdapter.Listener{
-            override fun onBookClick(book: Book) {
+            override fun onBookClick(book: Book,position:Int) {
                 Toast.makeText(applicationContext, "Add ${book.title} to cart", Toast.LENGTH_SHORT).show()
+                adapter.removeItem(position)
             }
         })
 
         recyclerViewBook?.adapter = adapter
         recyclerViewBook?.layoutManager = LinearLayoutManager(this)
 
-        showBookList()
+        presenter.searchBook("")
 
     }
 
-    private fun showLoading(){
+    override fun setAdapterData(items: ArrayList<Book>) {
+        adapter.setBookList(items)
+    }
+
+    override fun showLoading(){
         recyclerViewBook?.visibility = View.GONE
         progressBar?.visibility = View.VISIBLE
     }
-    fun showBookList(){
+    override fun showContent(){
         recyclerViewBook?.visibility = View.VISIBLE
         progressBar?.visibility = View.GONE
     }
@@ -49,7 +57,7 @@ class BookActivity : AppCompatActivity() {
         Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun updateBookList(booklist: List<Book>){
+    private fun updateBookList(booklist: ArrayList<Book>){
         booklist.let {
             adapter.setBookList(booklist)
             adapter.notifyDataSetChanged()

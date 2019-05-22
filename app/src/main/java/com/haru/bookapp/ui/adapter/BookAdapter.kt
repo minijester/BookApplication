@@ -9,7 +9,7 @@ import com.haru.bookapp.model.Book
 
 class BookAdapter : RecyclerView.Adapter<BookViewHolder>() {
 
-    private var bookList: List<Book>? = null
+    private var bookList: ArrayList<Book>? = null
     private var listener: Listener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): BookViewHolder =
@@ -29,12 +29,17 @@ class BookAdapter : RecyclerView.Adapter<BookViewHolder>() {
             holder.setIsbn(book.isbn)
             holder.setPageCount(book.page)
             holder.setOnBookClickListener(View.OnClickListener {
-                listener?.onBookClick(book)
+                listener?.onBookClick(book,position)
             })
         }
     }
 
-    fun setBookList(bookList:List<Book>){
+    fun removeItem(position: Int){
+        bookList?.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun setBookList(bookList:ArrayList<Book>){
         this.bookList = bookList
     }
 
@@ -43,7 +48,7 @@ class BookAdapter : RecyclerView.Adapter<BookViewHolder>() {
     }
 
     interface Listener {
-        fun onBookClick(book:Book)
+        fun onBookClick(book:Book,position: Int)
 
     }
 
