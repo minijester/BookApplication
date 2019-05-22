@@ -8,14 +8,16 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.haru.bookapp.R
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_register.*
 
-class MainActivity : AppCompatActivity() {
+class Register : AppCompatActivity() {
 
     private var mAuth: FirebaseAuth? = null
-    private val tag: String = "Main Activity"
+    private val tag = "Register Activity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_register)
 
         mAuth = FirebaseAuth.getInstance()
         if (mAuth!!.currentUser != null){
@@ -23,19 +25,14 @@ class MainActivity : AppCompatActivity() {
             goToBookList()
         }
 
-        loginBtn?.setOnClickListener { doLogin() }
-        registerBtn?.setOnClickListener { doRegister() }
+        registerButton?.setOnClickListener { registerToFireBase() }
     }
 
-    private fun doRegister() {
-        goToRegister()
-    }
+    private fun registerToFireBase() {
+        val username = userEmail.text.toString()
+        val password = userPass.text.toString()
 
-    private fun doLogin() {
-        val userName = userId.text.toString()
-        val password = userPassword.text.toString()
-
-        if (userName.isEmpty()){
+        if (username.isEmpty()){
             Toast.makeText(this, "Please enter your email address !", Toast.LENGTH_LONG).show()
             Log.d(tag,"Email was empty")
             return
@@ -46,28 +43,22 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        mAuth!!.signInWithEmailAndPassword(userName,password).addOnCompleteListener{task ->
+        mAuth!!.createUserWithEmailAndPassword(username,password).addOnCompleteListener { task ->
             if(!task.isSuccessful){
-                Toast.makeText(this, "Authentication Failed :" + task.exception, Toast.LENGTH_LONG).show()
-                Log.d(tag, "Authentication Failed :" + task.exception)
+                Toast.makeText(this, "Authentication Failed : " +  task.exception, Toast.LENGTH_LONG).show()
+                Log.d(tag,"Authentication Failed :" + task.exception)
             }
             else{
-                Toast.makeText(this, "Authentication Successful :", Toast.LENGTH_LONG).show()
-                Log.d(tag, "Sign in successful")
+                Toast.makeText(this, "Create account successful !", Toast.LENGTH_LONG).show()
+                Log.d(tag,"Create account successful!")
                 goToBookList()
-
             }
         }
+
     }
 
     private fun goToBookList(){
         val intent = Intent(this, BookActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun goToRegister(){
-        val intent = Intent(this, Register::class.java)
         startActivity(intent)
         finish()
     }
