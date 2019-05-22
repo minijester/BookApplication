@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "583680495773",
+    "firebase_url": "https://bookapplication-df4b7.firebaseio.com",
+    "project_id": "bookapplication-df4b7",
+    "storage_bucket": "bookapplication-df4b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583680495773:android:51c3702347490142",
+        "android_client_info": {
+          "package_name": "com.haru.bookapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "583680495773-4bmognv0gfi8d34af97fid788gvd2j63.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.haru.bookapp",
+            "certificate_hash": "a3930cd546be1233ca918c5dfa7be58f89e6da6d"
+          }
+        },
+        {
+          "client_id": "583680495773-3cs2lqegk15fro65qddtv42nsbbllqos.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-8kpJoGfydeOTAAwYg986UWodlXCKcx0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "583680495773-3cs2lqegk15fro65qddtv42nsbbllqos.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
